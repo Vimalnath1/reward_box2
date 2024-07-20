@@ -64,9 +64,9 @@ class _TimerModeState extends State<TimerMode> {
                 final newtime=await showTimePicker(context: context, 
                 initialTime: lightuptime
                 );
-                if (lightuptime!=null){
+                // if (lightuptime){
                     setState(()=>lightuptime=newtime!);
-                }
+                // }
                 
                 print(lightuptime.toString());
                 minutes=(lightuptime.hour*60+lightuptime.minute).toString();

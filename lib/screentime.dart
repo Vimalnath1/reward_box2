@@ -59,7 +59,7 @@ class _ScreenTimeState extends State<ScreenTime> {
   // screengoal="";
   bool gotdata=false;
   late SharedPreferences preferences;
-  
+  bool notused=false;
   //int time=0;
   int tim=0;
   int hours=0;
@@ -217,7 +217,7 @@ class _ScreenTimeState extends State<ScreenTime> {
             //screentimepreferences.setInt("screentime",time);
              print(screentimepreferences.getString("${selectedapp} FirstTime")!);
              print(screentimepreferences.getString("${selectedapp} EndTime")!);
-            
+           
           //}
           for (var info in _infos) {
             if (info.packageName==selectedapp){
@@ -225,7 +225,7 @@ class _ScreenTimeState extends State<ScreenTime> {
               print(info.endDate);
               List<String> gettingtime=info.
               usage.toString().split("");
-              print(gettingtime);
+              print("Timedata"+gettingtime.toString());
               tim+=int.parse(gettingtime[0])*60;
               tim+=int.parse(gettingtime[2]+gettingtime[3]);
               print(tim);
@@ -243,7 +243,7 @@ class _ScreenTimeState extends State<ScreenTime> {
                 hours=int.parse(screengoal)-((time/1000/3600).floor());
               }
                print(hours);
-          print(time);
+          print("Time:"+time.toString());
           print(int.parse(screengoal)*60);
               if (time<(int.parse(screengoal)*3600*1000)){
                 lockstatusscreentime=true;
@@ -272,14 +272,24 @@ class _ScreenTimeState extends State<ScreenTime> {
               });
               
             } 
+          
+          }
+          if (!gotdata){
+            setState(() {
+                notused=true;
+              });
+            print("You haven't used this app today");
           }
           }, child: const Text("Get Screen Time Data")),
+            
             if (gotdata)
               Text("Goal: $screengoal hours"),
             if (hours>=0 && gotdata) 
               Text("Time Remaining: $hours hours and $minutes minutes"),
             if (minutes<0)
-              Text("You have exceeded the goal")
+              Text("You have exceeded the goal"),
+            if (notused)
+              Text("You have't used this app today")
           
           ])
 
